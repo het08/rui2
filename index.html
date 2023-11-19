@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Do vs Does Game</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(to bottom, #ffeb3b, #ff9800);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      #game-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        text-align: center;
+      }
+
+      #game-heading {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+
+      .question-container {
+        margin-bottom: 20px;
+      }
+
+      .options-container {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .option {
+        padding: 10px;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Modal styles */
+      #modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-container">
+      <div id="game-heading">DO/Does</div>
+      <div class="question-container" id="question-container">
+        <p id="question-text"></p>
+      </div>
+
+      <div class="options-container">
+        <div class="option" onclick="checkAnswer('do')">Do</div>
+        <div class="option" onclick="checkAnswer('does')">Does</div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal">
+      <p id="modal-message"></p>
+      <button onclick="closeModal()">OK</button>
+    </div>
+
+    <script>
+      let score = 0;
+      let currentQuestion = 0;
+      const questions = [
+        { text: "1. ________ she study?", answer: "does" },
+        { text: "2. ________ they play?", answer: "do" },
+        { text: "3. ________ Ahmed work ?", answer: "does" },
+        { text: "4. ________ Sara cook ?", answer: "does" },
+        { text: "5. ________ children play together?", answer: "do" },
+        { text: "6. ________ your father work as a doctor?", answer: "does" },
+        { text: "7. ________ you play in the garden? ", answer: "do" },
+        { text: "8. ________ she write her homework?", answer: "does" },
+        { text: "9. ________ he help in gardening?", answer: "does" },
+        { text: "10. ________ they sing a song?", answer: "do" },
+        { text: "11. ________ you like strawberry milk shake?", answer: "do" },
+        { text: "12. ________ the monkey eat banana?", answer: "does" },
+        { text: "13. ________ you play handball in a team?", answer: "do" },
+        { text: "14. ________ mum and dad cook pasta ?", answer: "do" },
+        { text: "15. ________ Sarah play the guitar?", answer: "does" },
+        { text: "16. ________ Diana climb trees?", answer: "does" },
+        { text: "17. ________ Ahmed go fishing?", answer: "does" },
+        { text: "18. ________ She ride a horse?", answer: "does" },
+        { text: "19. ________ Amna and Sara like cucumbers?", answer: "do" },
+        { text: "20. ________ Jack and Harry play basketball?", answer: "do" },
+
+        // Add more questions following the same structure
+      ];
+
+      function displayQuestion() {
+        const questionText = document.getElementById("question-text");
+
+        if (currentQuestion < questions.length) {
+          questionText.textContent = questions[currentQuestion].text;
+        } else {
+          // Game Over: Display the final score or redirect to a new page
+          showModal(`Game Over! Your Score: ${score} out of 100`);
+        }
+      }
+
+      function showModal(message) {
+        const modal = document.getElementById("modal");
+        const modalMessage = document.getElementById("modal-message");
+        modalMessage.textContent = message;
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.style.display = "none";
+
+        // Move to the next question or end the game
+        currentQuestion++;
+        displayQuestion();
+      }
+
+      function checkAnswer(userChoice) {
+        const correctAnswer = questions[currentQuestion].answer;
+
+        if (userChoice === correctAnswer) {
+          score += 5;
+          showModal("Correct! You earned 5 points.");
+        } else {
+          showModal("Incorrect! No points earned.");
+        }
+      }
+
+      // Initial question display
+      displayQuestion();
+    </script>
+  </body>
+</html>
